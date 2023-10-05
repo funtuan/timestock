@@ -1,0 +1,23 @@
+{
+  "name": "timestock",
+  "version": "1.0.9",
+  "description": "",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsup src/index.ts --dts",
+    "deploy": "npm run build && npm publish --access=public"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.7.13",
+    "@typescript-eslint/eslint-plugin": "^5.35.1",
+    "eslint": "^8.22.0",
+    "eslint-config-standard-with-typescript": "^21.0.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.0.1",
+    "tsup": "^6.2.2",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {}
+}
