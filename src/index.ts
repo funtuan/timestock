@@ -23,7 +23,7 @@ export class Timestock {
     }
   }
 
-  public addPeriod (period: TimePeriod): void {
+  /* public addPeriod (period: TimePeriod): void {
     // 如果 volume 為 0，則不加入
     if (period.volume === 0) {
       return
@@ -45,7 +45,7 @@ export class Timestock {
         return
       }
     }
-  }
+  } */
 
   // 運算 - 位移
   public offset (ms: number): Timestock {
