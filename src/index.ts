@@ -19,7 +19,7 @@ export class Timestock {
     periods: TimePeriod[]
   } {
     return {
-      periods: this.periods,
+      periods: this._mergeSameVolume(this.periods),
     }
   }
 
@@ -58,6 +58,26 @@ export class Timestock {
         }
       }),
     })
+  }
+
+  // 合併相同 volume 的 period
+  private _mergeSameVolume (periods: TimePeriod[]): TimePeriod[] {
+    const newPeriods: TimePeriod[] = []
+    for (let i = 0; i < periods.length; i++) {
+      if (newPeriods.length === 0) {
+        newPeriods.push(periods[i])
+        continue
+      }
+      if (
+        newPeriods[newPeriods.length - 1].volume === periods[i].volume &&
+        newPeriods[newPeriods.length - 1].end.getTime() === periods[i].start.getTime()
+      ) {
+        newPeriods[newPeriods.length - 1].end = periods[i].end
+      } else {
+        newPeriods.push(periods[i])
+      }
+    }
+    return newPeriods
   }
 
   // 補 0 運算

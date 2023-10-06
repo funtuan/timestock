@@ -79,11 +79,6 @@ describe('Timestock', () => {
       },
       {
         start: new Date('2023-10-03T00:00:00.000Z'),
-        end: new Date('2023-10-04T00:00:00.000Z'),
-        volume: 2,
-      },
-      {
-        start: new Date('2023-10-04T00:00:00.000Z'),
         end: new Date('2023-10-05T00:00:00.000Z'),
         volume: 2,
       },
@@ -102,21 +97,11 @@ describe('Timestock', () => {
       },
       {
         start: new Date('2023-10-02T00:00:00.000Z'),
-        end: new Date('2023-10-03T00:00:00.000Z'),
-        volume: 2,
-      },
-      {
-        start: new Date('2023-10-03T00:00:00.000Z'),
         end: new Date('2023-10-04T00:00:00.000Z'),
         volume: 2,
       },
       {
         start: new Date('2023-10-04T00:00:00.000Z'),
-        end: new Date('2023-10-05T00:00:00.000Z'),
-        volume: 3,
-      },
-      {
-        start: new Date('2023-10-05T00:00:00.000Z'),
         end: new Date('2023-10-06T00:00:00.000Z'),
         volume: 3,
       },
