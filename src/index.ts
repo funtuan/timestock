@@ -1,5 +1,5 @@
 
-interface TimePeriod {
+export interface TimePeriod {
   start: Date
   end: Date
   volume: number
@@ -57,6 +57,72 @@ export class Timestock {
           end: new Date(period.end.getTime() + ms),
         }
       }),
+    })
+  }
+
+  // 補 0 運算
+  private _fillZero (periods: TimePeriod[]): TimePeriod[] {
+    if (periods.length < 2) {
+      return periods
+    }
+    const newPeriods: TimePeriod[] = []
+    for (let i = 0; i < periods.length; i++) {
+      newPeriods.push(periods[i])
+      if (i < periods.length - 1) {
+        if (periods[i].end < periods[i + 1].start) {
+          newPeriods.push({
+            start: periods[i].end,
+            end: periods[i + 1].start,
+            volume: 0,
+          })
+        }
+      }
+    }
+
+    return newPeriods
+  }
+
+  // 刪除 0 運算
+  private _deleteZero (periods: TimePeriod[]): TimePeriod[] {
+    return periods.filter((period) => period.volume !== 0)
+  }
+
+  // 運算 - 最小延長
+  public extendMin (ms: number): Timestock {
+    if (this.periods.length === 0) {
+      return new Timestock({
+        periods: [],
+      })
+    }
+    const periods = this._fillZero(this.periods)
+    const newPeriods: TimePeriod[] = []
+    let nextPoint = periods[0].start
+    for (let i = 0; i < periods.length; i++) {
+      const maxPoint = new Date(periods[i].start.getTime() + ms)
+      let end = periods[i].end
+      for (let j = i; j < periods.length; j++) {
+        if (periods[j].volume < periods[i].volume) {
+          break
+        }
+        if (periods[j].end >= maxPoint) {
+          if (i !== j) {
+            end = maxPoint
+          }
+          break
+        }
+        end = periods[j].end
+      }
+      if (end > nextPoint) {
+        newPeriods.push({
+          start: nextPoint,
+          end,
+          volume: periods[i].volume,
+        })
+        nextPoint = end
+      }
+    }
+    return new Timestock({
+      periods: this._deleteZero(newPeriods),
     })
   }
 
