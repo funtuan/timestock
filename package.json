@@ -1,7 +1,11 @@
 {
   "name": "timestock",
-  "version": "0.1.0",
-  "description": "",
+  "version": "0.1.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/funtuan/timestock.git"
+  },
+  "description": "timestock calculates inventory for time segments using basic operators",
   "main": "./dist/index.js",
   "scripts": {
     "build": "tsup src/index.ts --dts",
