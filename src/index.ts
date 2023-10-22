@@ -115,30 +115,35 @@ export class Timestock {
       })
     }
     const periods = this._fillZero(this.periods)
+    periods.push({
+      start: periods[periods.length - 1].end,
+      end: new Date(+periods[periods.length - 1].end + 1),
+      volume: 0,
+    })
     const newPeriods: TimePeriod[] = []
-    let nextPoint = periods[0].start
-    for (let i = 0; i < periods.length; i++) {
-      const maxPoint = new Date(periods[i].start.getTime() + ms)
-      let end = periods[i].end
-      for (let j = i; j < periods.length; j++) {
+    let nextPoint = periods[periods.length - 1].start
+    for (let i = periods.length - 1; i >= 0; i--) {
+      const minPoint = new Date(periods[i].start.getTime() - ms)
+      let start = periods[i].start
+      for (let j = i; j >= 0; j--) {
         if (periods[j].volume < periods[i].volume) {
           break
         }
-        if (periods[j].end >= maxPoint) {
+        if (periods[j].start <= minPoint) {
           if (i !== j) {
-            end = maxPoint
+            start = minPoint
           }
           break
         }
-        end = periods[j].end
+        start = periods[j].start
       }
-      if (end > nextPoint) {
-        newPeriods.push({
-          start: nextPoint,
-          end,
+      if (start < nextPoint) {
+        newPeriods.unshift({
+          start,
+          end: nextPoint,
           volume: periods[i].volume,
         })
-        nextPoint = end
+        nextPoint = start
       }
     }
     return new Timestock({

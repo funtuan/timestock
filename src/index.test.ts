@@ -117,27 +117,22 @@ describe('Timestock', () => {
       periods: [
         {
           start: new Date('2023-10-01T00:00:00.000Z'),
-          end: new Date('2023-10-01T01:00:00.000Z'),
-          volume: 2,
-        },
-        {
-          start: new Date('2023-10-01T01:00:00.000Z'),
-          end: new Date('2023-10-01T02:00:00.000Z'),
+          end: new Date('2023-10-01T03:00:00.000Z'),
           volume: 1,
         },
         {
-          start: new Date('2023-10-01T02:00:00.000Z'),
-          end: new Date('2023-10-01T02:30:00.000Z'),
-          volume: 2,
+          start: new Date('2023-10-01T04:00:00.000Z'),
+          end: new Date('2023-10-01T06:00:00.000Z'),
+          volume: 3,
         },
         {
-          start: new Date('2023-10-01T04:00:00.000Z'),
+          start: new Date('2023-10-01T06:00:00.000Z'),
           end: new Date('2023-10-01T07:00:00.000Z'),
           volume: 1,
         },
         {
-          start: new Date('2023-10-01T07:30:00.000Z'),
-          end: new Date('2023-10-01T10:00:00.000Z'),
+          start: new Date('2023-10-01T07:00:00.000Z'),
+          end: new Date('2023-10-01T20:00:00.000Z'),
           volume: 2,
         },
       ],
@@ -147,21 +142,16 @@ describe('Timestock', () => {
       {
         start: new Date('2023-10-01T00:00:00.000Z'),
         end: new Date('2023-10-01T01:00:00.000Z'),
-        volume: 2,
-      },
-      {
-        start: new Date('2023-10-01T01:00:00.000Z'),
-        end: new Date('2023-10-01T02:30:00.000Z'),
         volume: 1,
       },
       {
-        start: new Date('2023-10-01T04:30:00.000Z'),
+        start: new Date('2023-10-01T04:00:00.000Z'),
         end: new Date('2023-10-01T07:00:00.000Z'),
         volume: 1,
       },
       {
-        start: new Date('2023-10-01T09:00:00.000Z'),
-        end: new Date('2023-10-01T10:00:00.000Z'),
+        start: new Date('2023-10-01T07:00:00.000Z'),
+        end: new Date('2023-10-01T18:00:00.000Z'),
         volume: 2,
       },
     ])
@@ -207,9 +197,7 @@ describe('Timestock', () => {
       },
     ])
     expect(
-      timestock.intersect(
-        timestock.extendMin(diffMs).offset(-diffMs),
-      ).serialize().periods,
+      timestock.extendMin(diffMs).serialize().periods,
     ).toEqual([
       {
         start: new Date('2023-10-01T00:00:00.000Z'),
