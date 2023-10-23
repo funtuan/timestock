@@ -145,6 +145,35 @@ describe('Timestock', () => {
       },
     ])
   })
+  test('getMinStart and getMaxEnd', () => {
+    const timestock = new Timestock({
+      periods: [
+        {
+          start: new Date('2023-09-01T00:00:00.000Z'),
+          end: new Date('2023-09-04T00:00:00.000Z'),
+          volume: 0,
+        },
+        {
+          start: new Date('2023-10-01T00:00:00.000Z'),
+          end: new Date('2023-10-04T00:00:00.000Z'),
+          volume: 2,
+        },
+        {
+          start: new Date('2023-10-04T00:00:00.000Z'),
+          end: new Date('2023-10-06T00:00:00.000Z'),
+          volume: 3,
+        },
+        {
+          start: new Date('2023-10-07T00:00:00.000Z'),
+          end: new Date('2023-10-08T00:00:00.000Z'),
+          volume: 0,
+        },
+      ],
+    })
+
+    expect(timestock.getMinStart()).toEqual(new Date('2023-10-01T00:00:00.000Z'))
+    expect(timestock.getMaxEnd()).toEqual(new Date('2023-10-06T00:00:00.000Z'))
+  })
   test('extendMin', () => {
     const timestock = new Timestock({
       periods: [

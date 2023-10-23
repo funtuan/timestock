@@ -202,6 +202,28 @@ export class Timestock {
     })
   }
 
+  // 取得最小開始時間
+  public getMinStart (): Date | null {
+    // 需避免 volume 為 0 的情況
+    for (let i = 0; i < this.periods.length; i++) {
+      if (this.periods[i].volume !== 0) {
+        return this.periods[i].start
+      }
+    }
+    return null
+  }
+
+  // 取得最大結束時間
+  public getMaxEnd (): Date | null {
+    // 需避免 volume 為 0 的情況
+    for (let i = this.periods.length - 1; i >= 0; i--) {
+      if (this.periods[i].volume !== 0) {
+        return this.periods[i].end
+      }
+    }
+    return null
+  }
+
   // 運算子 - 減法
   public subtract (timestock: Timestock): Timestock {
     return this._calculatePeriods(timestock, (a, b) => a - b)
