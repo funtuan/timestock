@@ -23,29 +23,16 @@ export class Timestock {
     }
   }
 
-  /* public addPeriod (period: TimePeriod): void {
+  public addPeriod (period: TimePeriod): Timestock {
     // 如果 volume 為 0，則不加入
     if (period.volume === 0) {
-      return
+      return this
     }
-    for (let i = 0; i < this.periods.length; i++) {
-      if (period.start < this.periods[i].start) {
-        // 檢查是否有重疊
-        if (period.end > this.periods[i].start) {
-          throw new Error('periods overlapped')
-        }
-        // 如果有前一個，檢查是否有重疊
-        if (i > 0) {
-          if (period.start < this.periods[i - 1].end) {
-            throw new Error('periods overlapped')
-          }
-        }
 
-        this.periods.splice(i, 0, period)
-        return
-      }
-    }
-  } */
+    return this._calculatePeriods(new Timestock({
+      periods: [period],
+    }), (a, b) => a + b)
+  }
 
   // 運算 - 位移
   public offset (ms: number): Timestock {
@@ -218,6 +205,11 @@ export class Timestock {
   // 運算子 - 減法
   public subtract (timestock: Timestock): Timestock {
     return this._calculatePeriods(timestock, (a, b) => a - b)
+  }
+
+  // 運算子 - 加法
+  public add (timestock: Timestock): Timestock {
+    return this._calculatePeriods(timestock, (a, b) => a + b)
   }
 
   // 運算子 - 交集
