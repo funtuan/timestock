@@ -10,8 +10,8 @@ export class Timestock {
   constructor ({
     periods = [],
   }: {
-    periods: TimePeriod[]
-  }) {
+    periods?: TimePeriod[]
+  } = {}) {
     this.periods = periods
   }
 
@@ -242,5 +242,17 @@ export class Timestock {
   // 運算子 - 聯集
   public union (timestock: Timestock): Timestock {
     return this._calculatePeriods(timestock, (a, b) => Math.max(a, b))
+  }
+
+  // 整個 timestock 的 volume 操作
+  public setVolume (setVolumeOp: number | ((volume: number) => number)): Timestock {
+    return new Timestock({
+      periods: this.periods.map((period) => {
+        return {
+          ...period,
+          volume: typeof setVolumeOp === 'number' ? setVolumeOp : setVolumeOp(period.volume),
+        }
+      }),
+    })
   }
 }
